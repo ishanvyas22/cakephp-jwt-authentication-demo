@@ -6,8 +6,8 @@ This project is proof of concept on implementation of JWT authentication in Cake
 
 1. Download the repo locally:
     ```sh
-    git clone git@github.com:ishanvyas22/cakephp-pingcrm.git
-    cd project-name
+    git clone git@github.com:ishanvyas22/cakephp-jwt-authentication-demo.git
+    cd cakephp-jwt-authentication-demo
     ```
 
 2. Install PHP dependencies:
@@ -27,3 +27,18 @@ This project is proof of concept on implementation of JWT authentication in Cake
     ```sh
     bin/cake server
     ```
+
+That's all!
+
+#### Generate JWT token
+
+You can send a `POST` request to `/api/users/login.json` URL with below details:
+
+- **Username:** john
+- **Password:** secret
+
+It will return JWT token in json response.
+
+#### Get User Information
+
+To get authenticated user's information you have to make a `GET` request to `/api/users.json` URL with the token you got from previous step in the `Authorization` header with `Bearer` prefix.
