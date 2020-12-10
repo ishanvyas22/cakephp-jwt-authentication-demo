@@ -32,9 +32,10 @@ class UsersControllerTest extends TestCase
             'username' => 'john',
             'password' => 'secret',
         ]);
-
-        debug($this->_getBodyAsString());
+        $token = json_decode($this->_getBodyAsString(), true);
 
         $this->assertResponseOk();
+        $this->assertHeader('Content-Type', 'application/json');
+        $this->assertNotEmpty($token);
     }
 }

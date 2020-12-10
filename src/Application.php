@@ -141,7 +141,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // Load the authenticators. Session should be first.
         // $service->loadAuthenticator('Authentication.Jwt', [
         //     'secretKey' => Security::getSalt(),
-        //     'algorithms' => ['RS256'],
+        //     'algorithms' => ['HS256'],
         // ]);
         $service->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
