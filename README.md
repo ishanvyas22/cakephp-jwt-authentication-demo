@@ -20,6 +20,7 @@ This project is proof of concept on implementation of JWT authentication in Cake
 4. Run database migrations & seeders:
     ```sh
     bin/cake migrations migrate
+    bin/cake migrations seed --seed=DatabaseSeed
     ```
 
 5. Run the dev server (the output will give the address):
