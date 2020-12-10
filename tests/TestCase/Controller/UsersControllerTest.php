@@ -15,6 +15,9 @@ class UsersControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
+    /**
+     * @inheritDoc
+     */
     protected $fixtures = ['app.Users'];
 
     /**
