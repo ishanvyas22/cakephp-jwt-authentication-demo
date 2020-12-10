@@ -98,12 +98,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware())
 
-            // Cross Site Request Forgery (CSRF) Protection Middleware
-            // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
-            ->add(new CsrfProtectionMiddleware([
-                'httponly' => true,
-            ]))
-
             ->add(new AuthenticationMiddleware($this));
 
         return $middlewareQueue;
@@ -139,31 +133,26 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     {
         $service = new AuthenticationService();
 
-        // Define where users should be redirected to when they are not authenticated
-        $service->setConfig([
-            'unauthenticatedRedirect' => Router::url([
-                'prefix' => false,
-                'plugin' => null,
-                'controller' => 'Users',
-                'action' => 'login',
-            ]),
-            'queryParam' => 'redirect',
-        ]);
-
         $fields = [
-            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+            IdentifierInterface::CREDENTIAL_USERNAME => 'username',
             IdentifierInterface::CREDENTIAL_PASSWORD => 'password'
         ];
+
         // Load the authenticators. Session should be first.
-        $service->loadIdentifier('Authentication.JwtSubject');
-        $service->loadAuthenticator('Authentication.Jwt', [
-            'secretKey' => Security::getSalt(),
-            'algorithms' => ['RS256'],
-            // 'returnPayload' => false,
+        // $service->loadAuthenticator('Authentication.Jwt', [
+        //     'secretKey' => Security::getSalt(),
+        //     'algorithms' => ['RS256'],
+        // ]);
+        $service->loadAuthenticator('Authentication.Form', [
+            'fields' => $fields,
         ]);
 
         // Load identifiers
-        $service->loadIdentifier('Authentication.Password', compact('fields'));
+        // $service->loadIdentifier('Authentication.JwtSubject');
+        $service->loadIdentifier('Authentication.Password', [
+            'returnPayload' => false,
+            'fields' => $fields,
+        ]);
 
         return $service;
     }

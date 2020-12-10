@@ -2,6 +2,7 @@
 ##########################
 /config/app_local.php
 /config/.env
+/config/Migrations/*.lock
 /logs/*
 /tmp/*
 /vendor/*

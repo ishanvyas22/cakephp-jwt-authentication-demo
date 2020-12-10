@@ -9,6 +9,8 @@ use Firebase\JWT\JWT;
 
 /**
  * Users Controller
+ *
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  */
 class UsersController extends AppController
 {
@@ -21,19 +23,22 @@ class UsersController extends AppController
 
     public function login()
     {
+        // $this->loadModel('Users');
+        // $users = $this->Users->find();
+        // debug($users->toArray());
         $result = $this->Authentication->getResult();
-
+        debug($result->getStatus());
+        debug($result->getErrors());
+        debug(get_class_methods($result));exit;
         if ($result->isValid()) {
-            $privateKey = Security::getSalt();
             $user = $result->getData();
             $payload = [
-                'iss' => 'myapp',
-                'sub' => $user->id,
+                'sub' => $user,
                 'exp' => time() + 60,
             ];
 
             $json = [
-                'token' => JWT::encode($payload, $privateKey, 'RS256'),
+                'token' => JWT::encode($payload, Security::getSalt(), 'RS256'),
             ];
         } else {
             $this->response = $this->response->withStatus(401);
