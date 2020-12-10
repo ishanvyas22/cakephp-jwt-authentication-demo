@@ -20,12 +20,7 @@ class UsersControllerTest extends TestCase
      */
     protected $fixtures = ['app.Users'];
 
-    /**
-     * Test index method
-     *
-     * @return void
-     */
-    public function testLogin(): void
+    public function testGeneratesJWTToken(): void
     {
         $this->configRequest([
             'headers' => ['Accept' => 'application/json']
@@ -35,10 +30,41 @@ class UsersControllerTest extends TestCase
             'username' => 'john',
             'password' => 'secret',
         ]);
-        $token = json_decode($this->_getBodyAsString(), true);
+        $responseInArray = json_decode($this->_getBodyAsString(), true);
 
         $this->assertResponseOk();
         $this->assertHeader('Content-Type', 'application/json');
-        $this->assertNotEmpty($token);
+        $this->assertNotEmpty($responseInArray['token']);
+    }
+
+    private function loginUser(): string
+    {
+        $this->post('/api/users/login.json', [
+            'username' => 'john',
+            'password' => 'secret',
+        ]);
+
+        $responseArray = json_decode($this->_getBodyAsString(), true);
+
+        return $responseArray['token'];
+    }
+
+    public function testReturnsAuthenticatesUsersDetails(): void
+    {
+        $token = $this->loginUser();
+        $this->configRequest([
+            'headers' => [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token,
+            ]
+        ]);
+
+        $this->get('/api/users.json');
+        $responseArray = json_decode($this->_getBodyAsString(), true);
+
+        $this->assertResponseOk();
+        $this->assertHeader('Content-Type', 'application/json');
+        $this->assertSame($responseArray['user']['name'], 'John Doe');
+        $this->assertSame($responseArray['user']['username'], 'john');
     }
 }

@@ -43,6 +43,16 @@ class UsersController extends AppController
         $this->viewBuilder()->setOption('serialize', 'json');
     }
 
+    public function index()
+    {
+        $identity = $this->Authentication->getIdentity();
+
+        $json = ['user' => $identity->getOriginalData()];
+
+        $this->set(compact('json'));
+        $this->viewBuilder()->setOption('serialize', 'json');
+    }
+
     public function logout()
     {
         $json = [];

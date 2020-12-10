@@ -138,17 +138,17 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             IdentifierInterface::CREDENTIAL_PASSWORD => 'password'
         ];
 
-        // Load the authenticators. Session should be first.
-        // $service->loadAuthenticator('Authentication.Jwt', [
-        //     'secretKey' => Security::getSalt(),
-        //     'algorithms' => ['HS256'],
-        // ]);
+        // Load the authenticators.
+        $service->loadAuthenticator('Authentication.Jwt', [
+            'secretKey' => Security::getSalt(),
+            'returnPayload' => false,
+        ]);
         $service->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
         ]);
 
         // Load identifiers
-        // $service->loadIdentifier('Authentication.JwtSubject');
+        $service->loadIdentifier('Authentication.JwtSubject');
         $service->loadIdentifier('Authentication.Password', [
             'returnPayload' => false,
             'fields' => $fields,
