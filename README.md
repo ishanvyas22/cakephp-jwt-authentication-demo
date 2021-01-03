@@ -30,6 +30,8 @@ This project is proof of concept on implementation of JWT authentication in Cake
 
 That's all!
 
+## Usage
+
 #### Generate JWT token
 
 You can send a `POST` request to `/api/users/login.json` URL with below details:
