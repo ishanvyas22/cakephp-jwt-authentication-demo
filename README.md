@@ -59,4 +59,4 @@ To get authenticated user's information you have to make a `GET` request to `/ap
 **or** [Paypal me](https://paypal.me/IshanVyas?locale.x=en_GB)
 
 ## License
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
