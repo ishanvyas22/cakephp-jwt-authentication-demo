@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\FrozenTime;
 use Migrations\AbstractSeed;
 
 /**
@@ -27,6 +28,8 @@ class DatabaseSeed extends AbstractSeed
                 'name' => 'John Doe',
                 'username' => 'john',
                 'password' => $hasher->hash('secret'),
+                'created' => FrozenTime::now(),
+                'modified' => FrozenTime::now(),
             ]
         ];
 
