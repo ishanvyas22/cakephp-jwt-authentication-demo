@@ -1,4 +1,4 @@
-# CakePHP JWT Authentication Demo
+# CakePHP JWT Authentication 
 
 This project is proof of concept on implementation of JWT authentication in CakePHP using [Authentication plugin](https://book.cakephp.org/authentication/2/en/index.html).
 
